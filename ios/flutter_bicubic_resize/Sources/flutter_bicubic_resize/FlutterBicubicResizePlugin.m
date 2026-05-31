@@ -6,6 +6,7 @@
 // linker to keep them in the final app binary (same trick as the former
 // Swift registrant). The C functions are declared in resize.h / resize.c.
 @interface FlutterBicubicResizePlugin : NSObject <FlutterPlugin>
++ (void)forceSymbolRetention;
 @end
 
 @implementation FlutterBicubicResizePlugin
@@ -22,8 +23,7 @@
 // Make real calls to the C functions so the linker cannot strip them as
 // "unused". Marked noinline to defeat optimization. The calls are safe: the
 // zero dimensions make each function return early before touching the buffers.
-__attribute__((noinline))
-+ (void)forceSymbolRetention {
++ (void)forceSymbolRetention __attribute__((noinline)) {
   uint8_t dummyInput[1] = {0};
   uint8_t dummyOutput[1] = {0};
 
