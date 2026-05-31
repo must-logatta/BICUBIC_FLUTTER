@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.6.0] - 2026-05-31
+
+### Added
+- **Swift Package Manager (SPM) support** for iOS, alongside the existing
+  CocoaPods integration. The plugin now ships an
+  `ios/flutter_bicubic_resize/Package.swift` and an SPM-compatible source layout
+  under `ios/flutter_bicubic_resize/Sources/flutter_bicubic_resize/`.
+
+### Changed
+- iOS native sources moved into the SPM `Sources/` layout; public C header
+  (`resize.h`) relocated to
+  `Sources/flutter_bicubic_resize/include/flutter_bicubic_resize/`.
+- The iOS plugin registrant was rewritten from Swift to Objective-C
+  (`FlutterBicubicResizePlugin.m`) so a single C-family SPM target can hold both
+  the `.m` registrant and the `.c` FFI sources (SPM forbids mixed Swift/C
+  targets). Behavior is unchanged — still an FFI-only plugin that forces native
+  symbol retention.
+- `ios/flutter_bicubic_resize.podspec` updated to the new SPM source paths plus
+  a module map, so CocoaPods keeps building against the same files.
+
 ## [1.5.3] - 2026-05-13
 
 ### Changed
